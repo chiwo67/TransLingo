@@ -1,32 +1,43 @@
 const registerForm = document.getElementById('register-form');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
+const registrationMessage = document.getElementById('error-message');
 
-registerForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const username = usernameInput.value;
-    const password = passwordInput.value;
-
-    validateForm();
+function showRegistrationMessage(message) {
+    registrationMessage.textContent = message;
+    registrationMessage.hidden = false;
 }
-);
 
-function validateForm() {
+registerForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    registrationMessage.textContent = '';
+    registrationMessage.hidden = true;
+
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    if (username === '' || password === '') {
-        alert('Please fill in both username and password.');
-        return false;
-    }else if (username.length < 3 || password.length < 6) {
-        alert('Username must be at least 3 characters and password must be at least 6 characters long.');
-        return false;
-    }else if (username === 'admin') {
-        alert('Username "admin" is not allowed.');
-        return false;
-    } else {
-        alert('Registration successful!');
-        return true;
-        window.location.href = 'index.html'; 
+    if (username.length < 3) {
+        showRegistrationMessage('Username must be at least 3 characters long.');
+        return;
     }
-}
+
+    if (password.length < 6) {
+        showRegistrationMessage('Password must be at least 6 characters long.');
+        return;
+    }
+
+    if (username.toLowerCase() === 'admin') {
+        showRegistrationMessage('The username "admin" is not allowed.');
+        return;
+    }
+
+    try {
+        localStorage.setItem('translingoAccount', JSON.stringify({ username, password }));
+    } catch (error) {
+        console.error('Unable to save the account in browser storage.', error);
+        showRegistrationMessage('Unable to save your account in this browser. Check your storage settings and try again.');
+        return;
+    }
+
+    window.location.href = '../index.html';
+});

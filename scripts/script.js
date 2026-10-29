@@ -1,41 +1,40 @@
 const loginForm = document.getElementById('login-form');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const errorMessage = document.getElementById('error-message');
+const usernameInput = document.getElementById('entered-username');
+const passwordInput = document.getElementById('entered-password');
+const loginMessage = document.getElementById('error-message');
 
-loginForm.addEventListener('submit', function(event) {
+function showLoginMessage(message) {
+    loginMessage.textContent = message;
+    loginMessage.hidden = false;
+}
+
+loginForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    const username = usernameInput.value;
-    const password = passwordInput.value;
+    loginMessage.textContent = '';
+    loginMessage.hidden = true;
 
-    validateForm();
-
-});
-
-function validateForm() {
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    if (username === '' || password === '') {
-       errorMessage('Please fill in both username and password.');
-        return false;
-    }else if (username !== 'admin' || password !== 'password') {
-        errorMessage('Invalid username or password.');
-        return false;
-    } else {
-        errorMessage('Login successful!');
-        return true;
+    let account;
+    try {
+        const savedAccount = localStorage.getItem('translingoAccount');
+        account = savedAccount ? JSON.parse(savedAccount) : null;
+    } catch (error) {
+        console.error('Unable to read the saved account from browser storage.', error);
+        showLoginMessage('Unable to access saved account data in this browser.');
+        return;
     }
-}
 
-function errorMessage(message) {
-    errorMessage.textContent = message;
-    errorMessage.style.display = 'block';
-}
+    if (!account || typeof account.username !== 'string' || typeof account.password !== 'string') {
+        showLoginMessage('No account found. Create an account before logging in.');
+        return;
+    }
 
-function clearErrorMessage() {
-    errorMessage.textContent = '';
-    errorMessage.style.display = 'none';
-}   
+    if (username !== account.username || password !== account.password) {
+        showLoginMessage('Invalid username or password.');
+        return;
+    }
 
-
+    window.location.href = 'templates/home.html';
+});
