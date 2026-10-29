@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Home | TransLingo</title>
+</head>
+<body class="min-h-screen bg-[#f7f5ee] text-[#132a13]">
+    <header class="flex items-center justify-between bg-[#132a13] px-6 py-5 sm:px-12">
+        <h1 class="text-xl font-bold tracking-[0.2em] text-[#f2e8cf]">TRANSLINGO</h1>
+        <button id="logout-btn" type="button" class="rounded-lg border border-white/20 px-4 py-2 font-semibold text-white transition hover:bg-white/10">Log out</button>
+    </header>
+
+    <main class="mx-auto flex min-h-[calc(100vh-72px)] w-full max-w-5xl flex-col justify-center px-6 py-10 sm:px-12">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#6a994e]">Welcome</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Your next conversation starts here.</h2>
+        <p class="mt-3 max-w-2xl text-[#59665a]">Translate text between languages and make every conversation count.</p>
+        <a href="translate.html" class="mt-8 inline-flex w-fit rounded-lg bg-[#386641] px-6 py-3 font-semibold text-white transition hover:bg-[#132a13] focus:outline-none focus:ring-4 focus:ring-[#6a994e]/30">Open translator</a>
+        <p id="logout-message" class="mt-4 text-sm text-red-600" role="alert" hidden></p>
+    </main>
+
+    <script src="../scripts/home.js"></script>
+</body>
+</html>

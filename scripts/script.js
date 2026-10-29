@@ -16,23 +16,24 @@ loginForm.addEventListener('submit', function (event) {
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    let account;
     try {
         const savedAccount = localStorage.getItem('translingoAccount');
-        account = savedAccount ? JSON.parse(savedAccount) : null;
+        const account = savedAccount ? JSON.parse(savedAccount) : null;
+
+        if (!account || typeof account.username !== 'string' || typeof account.password !== 'string') {
+            showLoginMessage('No account found. Create an account before logging in.');
+            return;
+        }
+
+        if (username !== account.username || password !== account.password) {
+            showLoginMessage('Invalid username or password.');
+            return;
+        }
+
+        sessionStorage.setItem('translingoSession', account.username);
     } catch (error) {
-        console.error('Unable to read the saved account from browser storage.', error);
-        showLoginMessage('Unable to access saved account data in this browser.');
-        return;
-    }
-
-    if (!account || typeof account.username !== 'string' || typeof account.password !== 'string') {
-        showLoginMessage('No account found. Create an account before logging in.');
-        return;
-    }
-
-    if (username !== account.username || password !== account.password) {
-        showLoginMessage('Invalid username or password.');
+        console.error('Unable to access account data in browser storage.', error);
+        showLoginMessage('Unable to access account data in this browser. Check your storage settings and try again.');
         return;
     }
 
