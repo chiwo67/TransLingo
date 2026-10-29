@@ -27,5 +27,6 @@ function validateForm() {
     } else {
         alert('Registration successful!');
         return true;
+        window.location.href = 'index.html'; 
     }
 }
