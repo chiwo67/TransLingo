@@ -53,8 +53,35 @@
 
             <div id="error-message" class="mt-4 text-sm text-red-500" role="alert" hidden></div>
         </div>
+
+        <section class="mt-8 rounded-2xl border border-[#e7e8df] bg-white p-6 shadow-[0_20px_60px_-35px_rgba(19,42,19,0.35)] sm:p-8" aria-labelledby="image-translation-title">
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-[#6a994e]">Image translator</p>
+            <h3 id="image-translation-title" class="mt-2 text-2xl font-bold tracking-tight">Translate text in an image</h3>
+            <p class="mt-2 text-sm text-[#59665a]">Upload a JPG, PNG, or WebP image up to 10 MB. Text is recognized in your browser; recognized text is sent to MyMemory for translation. The translated image is a best-effort preview and may not preserve the original background or layout perfectly.</p>
+
+            <label for="image-file" class="mt-5 block text-sm font-semibold text-[#263626]">Choose an image</label>
+            <input id="image-file" type="file" accept="image/jpeg,image/png,image/webp" class="mt-2 block w-full rounded-lg border border-[#dfe3d8] bg-[#fbfcf9] px-4 py-3 text-sm text-[#263626] file:mr-4 file:rounded-md file:border-0 file:bg-[#386641] file:px-4 file:py-2 file:font-semibold file:text-white hover:file:bg-[#132a13]">
+
+            <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+                <button id="image-translate-btn" type="button" disabled class="rounded-lg bg-[#386641] px-6 py-3 font-semibold text-white transition hover:bg-[#132a13] focus:outline-none focus:ring-4 focus:ring-[#6a994e]/30 disabled:cursor-not-allowed disabled:opacity-60">Translate image</button>
+                <a id="image-download" class="hidden rounded-lg border border-[#386641] px-6 py-3 text-center font-semibold text-[#386641] transition hover:bg-[#386641] hover:text-white" download="translingo-translated.png">Download translated image</a>
+            </div>
+
+            <p id="image-status" class="mt-4 text-sm text-[#59665a]" role="status" aria-live="polite" hidden></p>
+            <div id="image-preview-container" class="mt-5 grid gap-5 md:grid-cols-2" hidden>
+                <figure>
+                    <figcaption class="mb-2 text-sm font-semibold text-[#263626]">Original</figcaption>
+                    <canvas id="image-original" class="max-h-[32rem] max-w-full rounded-lg border border-[#dfe3d8] object-contain"></canvas>
+                </figure>
+                <figure id="image-result-figure" hidden>
+                    <figcaption class="mb-2 text-sm font-semibold text-[#263626]">Translated</figcaption>
+                    <canvas id="image-preview" class="max-h-[32rem] max-w-full rounded-lg border border-[#dfe3d8] object-contain"></canvas>
+                </figure>
+            </div>
+        </section>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="../scripts/translate.js"></script>
 </body>
 </html>
